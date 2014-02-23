@@ -1,0 +1,9 @@
+@echo off
+setlocal
+set MRUBY_DLL_DIR=%cd%
+git submodule init
+set MRUBY_CONFIG=%cd%\build_config.rb
+cd mruby
+ruby minirake -f Rakefile2 clean
+ruby minirake -f Rakefile2 dll
+endlocal

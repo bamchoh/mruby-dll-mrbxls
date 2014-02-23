@@ -1,0 +1,9 @@
+LIBRARY mrbxls.dll
+EXPORTS
+  xls_load_mrb_file
+  xls_mrb_open
+  xls_mrb_close
+  xls_get_elem_size
+  xls_get_ary_data
+  xls_get_ary_size_y
+  xls_get_ary_size_x

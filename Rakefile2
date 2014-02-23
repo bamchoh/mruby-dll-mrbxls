@@ -1,0 +1,42 @@
+# encoding: utf-8
+# Build description.
+# basic build file for mruby
+load 'Rakefile'
+
+task :dll => :all do
+  MRuby.each_target do |t|
+    rcs = "#{MRUBY_ROOT}/../mruby.rc"
+    res = "#{build_dir}/bin/shared/mruby.res"
+    sh "mkdir #{File.dirname(res).gsub('/','\\')}"
+    sh "rc /nologo /fo #{res} #{rcs}"
+
+    gem = gems.find { |gem| gem.name =~ /mrbxls/ }
+
+    current_dir = gem.dir.relative_path_from(Dir.pwd)
+    relative_from_root = gem.dir.relative_path_from(MRUBY_ROOT)
+    current_build_dir = "#{build_dir}/#{relative_from_root}"
+
+    gem.bins.each do |bin|
+      exec = "#{build_dir}/bin/#{bin}.dll"
+      objs = Dir.glob("#{current_dir}/tools/#{bin}/*.{c,cpp,cxx}").map { |f| objfile(f.pathmap("#{current_build_dir}/tools/#{bin}/%n")) }
+
+      gem_flags = gems.map { |g| g.linker.flags }
+      gem_flags_before_libraries = gems.map { |g| g.linker.flags_before_libraries }
+      gem_flags_after_libraries = gems.map { |g| g.linker.flags_after_libraries }
+      gem_libraries = gems.map { |g| g.linker.libraries }
+      gem_libraries << "#{build_dir}/lib/libmruby"
+      gem_library_paths = gems.map { |g| g.linker.library_paths }
+
+      gem_flags |= %w(/dll /machine:x86)
+      gem_flags << "/def:#{MRUBY_ROOT}/../mrbxls.def"
+      gem_flags << objs
+      gem_flags << res
+
+      linker.run exec, [], gem_libraries, gem_library_paths, gem_flags, gem_flags_before_libraries, gem_flags_after_libraries
+
+      install_dir = "#{MRUBY_ROOT}/bin/shared/mrbxls.dll"
+      FileUtils.cp exec, install_dir, { :verbose => $verbose }
+    end
+
+  end
+end
