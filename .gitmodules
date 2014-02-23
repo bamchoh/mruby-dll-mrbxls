@@ -8,3 +8,6 @@
 [submodule "mruby-bin-mrbxls"]
 	path = mruby-bin-mrbxls
 	url = git@github.com:bamchoh/mruby-bin-mrbxls
+[submodule "mruby"]
+	path = mruby
+	url = http://github.com/mruby/mruby
