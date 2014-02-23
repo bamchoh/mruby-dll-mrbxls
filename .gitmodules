@@ -2,12 +2,13 @@
 	path = mruby-xmlrpc
 	url = git@github.com:bamchoh/mruby-xmlrpc
 	branch = win32
-[submodule "mruby-onig-regexp"]
-	path = mruby-onig-regexp
-	url = git@github.com:bamchoh/mruby-onig-regexp
 [submodule "mruby-bin-mrbxls"]
 	path = mruby-bin-mrbxls
 	url = git@github.com:bamchoh/mruby-bin-mrbxls
 [submodule "mruby"]
 	path = mruby
 	url = http://github.com/mruby/mruby
+[submodule "mruby-onig-regexp"]
+	path = mruby-onig-regexp
+	url = http://github.com/bamchoh/mruby-onig-regexp
+	branch = for_mrbxls
