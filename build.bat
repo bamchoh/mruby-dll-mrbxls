@@ -2,6 +2,7 @@
 setlocal
 set MRUBY_DLL_DIR=%cd%
 git submodule init
+git submodule update
 set MRUBY_CONFIG=%cd%\build_config.rb
 set MRUBY_RAKEFILE=%cd%\Rakefile2
 cd mruby
